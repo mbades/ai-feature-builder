@@ -42,23 +42,34 @@ const consoleFormat = winston.format.combine(
   )
 );
 
-// Create logs directory if it doesn't exist (async)
+// Create logs directory if it doesn't exist (only in development)
 const fs = require('fs').promises;
 const path = require('path');
 
 async function ensureLogsDirectory() {
+  // Skip in production - no file logging
+  if (config.server.env === 'production') {
+    return;
+  }
+  
   try {
     await fs.access(config.paths.logs);
   } catch (error) {
     // Directory doesn't exist, create it
-    await fs.mkdir(config.paths.logs, { recursive: true });
+    try {
+      await fs.mkdir(config.paths.logs, { recursive: true });
+    } catch (mkdirError) {
+      console.warn('Could not create logs directory:', mkdirError.message);
+    }
   }
 }
 
-// Initialize logs directory asynchronously
-ensureLogsDirectory().catch(error => {
-  console.error('Failed to create logs directory:', error.message);
-});
+// Initialize logs directory asynchronously (only in development)
+if (config.server.env !== 'production') {
+  ensureLogsDirectory().catch(error => {
+    console.warn('Failed to create logs directory:', error.message);
+  });
+}
 
 // Define transports based on environment
 const getTransports = () => {
