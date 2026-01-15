@@ -15,8 +15,8 @@ Un'applicazione web che utilizza l'intelligenza artificiale per convertire descr
 
 ## 🚀 Demo Live
 
-- **Frontend**: [https://ai-feature-builder.vercel.app](https://ai-feature-builder.vercel.app)
-- **Backend API**: [https://ai-feature-builder-backend.railway.app](https://ai-feature-builder-backend.railway.app)
+- **Frontend**: [https://ai-feature-builder-mbades.vercel.app](https://ai-feature-builder-mbades.vercel.app) *(sarà disponibile dopo il deploy)*
+- **Backend API**: [https://ai-feature-builder-backend-production.up.railway.app](https://ai-feature-builder-backend-production.up.railway.app) *(sarà disponibile dopo il deploy)*
 
 ## 🛠️ Stack Tecnologico
 
@@ -43,7 +43,7 @@ Un'applicazione web che utilizza l'intelligenza artificiale per convertire descr
 
 ```bash
 # 1. Clona il repository
-git clone https://github.com/your-username/ai-feature-builder.git
+git clone https://github.com/mbades/ai-feature-builder.git
 cd ai-feature-builder
 
 # 2. Installa dipendenze
@@ -147,6 +147,6 @@ Questo progetto è sotto licenza MIT. Vedi il file [LICENSE](LICENSE) per dettag
 
 **Creato con ❤️ per semplificare lo sviluppo software**
 
-[Demo](https://ai-feature-builder.vercel.app) • [Documentazione](docs/) • [Issues](https://github.com/your-username/ai-feature-builder/issues)
+[Demo](https://ai-feature-builder-mbades.vercel.app) • [Documentazione](docs/) • [Issues](https://github.com/mbades/ai-feature-builder/issues)
 
 </div>
