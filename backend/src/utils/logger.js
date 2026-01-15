@@ -72,40 +72,31 @@ const getTransports = () => {
     })
   );
 
-  // File transports (disabled in test environment)
-  if (config.server.env !== 'test') {
-    // Error log file
-    transports.push(
-      new winston.transports.File({
-        filename: path.join(config.paths.logs, 'error.log'),
-        level: 'error',
-        format: logFormat,
-        maxsize: config.logging.maxSize,
-        maxFiles: config.logging.maxFiles
-      })
-    );
-
-    // Combined log file
-    transports.push(
-      new winston.transports.File({
-        filename: path.join(config.paths.logs, 'combined.log'),
-        format: logFormat,
-        maxsize: config.logging.maxSize,
-        maxFiles: config.logging.maxFiles
-      })
-    );
-
-    // HTTP requests log (production only)
-    if (config.server.env === 'production') {
+  // File transports (disabled in test and production environments for Railway/Vercel)
+  if (config.server.env !== 'test' && config.server.env !== 'production') {
+    try {
+      // Error log file
       transports.push(
         new winston.transports.File({
-          filename: path.join(config.paths.logs, 'http.log'),
-          level: 'http',
+          filename: path.join(config.paths.logs, 'error.log'),
+          level: 'error',
           format: logFormat,
           maxsize: config.logging.maxSize,
           maxFiles: config.logging.maxFiles
         })
       );
+
+      // Combined log file
+      transports.push(
+        new winston.transports.File({
+          filename: path.join(config.paths.logs, 'combined.log'),
+          format: logFormat,
+          maxsize: config.logging.maxSize,
+          maxFiles: config.logging.maxFiles
+        })
+      );
+    } catch (error) {
+      console.warn('File logging disabled - using console only:', error.message);
     }
   }
 
@@ -119,21 +110,8 @@ const logger = winston.createLogger({
   format: logFormat,
   transports: getTransports(),
   // Do not exit on handled exceptions
-  exitOnError: false,
-  // Handle uncaught exceptions
-  exceptionHandlers: config.server.env !== 'test' ? [
-    new winston.transports.File({
-      filename: path.join(config.paths.logs, 'exceptions.log'),
-      format: logFormat
-    })
-  ] : [],
-  // Handle unhandled promise rejections
-  rejectionHandlers: config.server.env !== 'test' ? [
-    new winston.transports.File({
-      filename: path.join(config.paths.logs, 'rejections.log'),
-      format: logFormat
-    })
-  ] : []
+  exitOnError: false
+  // Exception and rejection handlers disabled in production (no file access)
 });
 
 // Add request correlation ID to logs
