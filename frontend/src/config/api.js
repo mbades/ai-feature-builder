@@ -14,7 +14,7 @@ export const API_ENDPOINTS = {
 
 // Configurazioni API
 export const API_CONFIG = {
-  BASE_URL: import.meta.env.VITE_API_BASE_URL || 'http://localhost:3001',
+  BASE_URL: import.meta.env.VITE_API_BASE_URL || 'https://exciting-celebration-production.up.railway.app',
   TIMEOUT: 120000, // 2 minuti per AI generation
   RETRY_ATTEMPTS: 3,
   RETRY_DELAY: 1000,
