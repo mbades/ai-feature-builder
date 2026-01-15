@@ -141,16 +141,17 @@ const validateGenerateRequest = (req, res, next) => {
 function performSecurityValidation(data, clientIp) {
   // Check description for suspicious patterns
   if (data.description) {
+    // Suspicious keywords - rimossi quelli che possono apparire in testo normale
     const suspiciousKeywords = [
-      'eval', 'function', 'script', 'iframe', 'object', 'embed',
-      'javascript:', 'vbscript:', 'data:', 'file:', 'ftp:',
-      'select ', 'insert ', 'update ', 'delete ', 'drop ',
-      'union ', 'exec ', '--', '/*', '*/', ';'
+      '<script', '</script>', 'javascript:', 'vbscript:', 'data:text/html',
+      'onerror=', 'onload=', 'onclick=', '<iframe', '</iframe>',
+      'eval(', 'exec(', 'system(', 'shell_exec',
+      'union select', 'drop table', 'delete from', 'insert into'
     ];
 
     const lowerDesc = data.description.toLowerCase();
     const foundSuspicious = suspiciousKeywords.filter(keyword => 
-      lowerDesc.includes(keyword)
+      lowerDesc.includes(keyword.toLowerCase())
     );
 
     if (foundSuspicious.length > 0) {
@@ -162,25 +163,27 @@ function performSecurityValidation(data, clientIp) {
 
       return {
         valid: false,
-        error: 'Description contains potentially malicious content'
+        error: 'La descrizione contiene contenuto potenzialmente pericoloso'
       };
     }
 
     // Check for excessive special characters (potential encoding attack)
-    const specialCharCount = (data.description.match(/[<>'"&%]/g) || []).length;
-    const specialCharRatio = specialCharCount / data.description.length;
+    // Esclusi apostrofi, virgolette e virgole che sono normali in italiano
+    const dangerousChars = (data.description.match(/[<>%&\$\{\}\[\]]/g) || []).length;
+    const dangerousCharRatio = dangerousChars / data.description.length;
 
-    if (specialCharRatio > 0.1) { // More than 10% special characters
-      logger.warn('High special character ratio detected', {
-        ratio: specialCharRatio,
-        specialCharCount,
+    // Aumentato threshold da 0.1 a 0.15 (15%) per essere meno aggressivo
+    if (dangerousCharRatio > 0.15) {
+      logger.warn('High dangerous character ratio detected', {
+        ratio: dangerousCharRatio,
+        dangerousCharCount: dangerousChars,
         totalLength: data.description.length,
         ip: clientIp
       });
 
       return {
         valid: false,
-        error: 'Description contains too many special characters'
+        error: 'La descrizione contiene troppi caratteri speciali sospetti'
       };
     }
   }
