@@ -1,0 +1,29 @@
+# Ignore frontend directory
+../frontend/
+../docs/
+../.github/
+../Dockerfile
+../docker-compose.yml
+../vercel.json
+../lighthouserc.json
+../deploy.sh
+../DEPLOYMENT.md
+../DEPLOY_GUIDE.md
+
+# Development files
+node_modules/
+npm-debug.log*
+.env.local
+.env.development
+.env.test
+
+# Logs
+logs/
+*.log
+
+# Coverage
+coverage/
+
+# IDE
+.vscode/
+.idea/
