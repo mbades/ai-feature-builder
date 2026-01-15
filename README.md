@@ -15,8 +15,8 @@ Un'applicazione web che utilizza l'intelligenza artificiale per convertire descr
 
 ## 🚀 Demo Live
 
-- **Frontend**: [https://ai-feature-builder-mbades.vercel.app](https://ai-feature-builder-mbades.vercel.app) *(sarà disponibile dopo il deploy)*
-- **Backend API**: [https://ai-feature-builder-backend-production.up.railway.app](https://ai-feature-builder-backend-production.up.railway.app) *(sarà disponibile dopo il deploy)*
+- **Frontend**: [https://ai-feature-builder.vercel.app](https://ai-feature-builder.vercel.app)
+- **Backend API**: [https://exciting-celebration-production.up.railway.app](https://exciting-celebration-production.up.railway.app)
 
 ## 🛠️ Stack Tecnologico
 
@@ -147,6 +147,6 @@ Questo progetto è sotto licenza MIT. Vedi il file [LICENSE](LICENSE) per dettag
 
 **Creato con ❤️ per semplificare lo sviluppo software**
 
-[Demo](https://ai-feature-builder-mbades.vercel.app) • [Documentazione](docs/) • [Issues](https://github.com/mbades/ai-feature-builder/issues)
+[Demo](https://ai-feature-builder.vercel.app) • [Documentazione](docs/) • [Issues](https://github.com/mbades/ai-feature-builder/issues)
 
 </div>
